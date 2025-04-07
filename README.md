@@ -7,9 +7,9 @@ Trevor Bedford<sup>1,5</sup>.
 
 <sup>1</sup> Vaccine and Infectious Disease Division, Fred Hutchinson Cancer Center, Seattle, WA, USA <br>
 <sup>2</sup> <br>
-<sup>3</sup> University of North Carolina at Chapel Hill, Chapel Hill, NC, USA
-<sup>4</sup> Johns Hopkins Bloomberg School of Public Health, Baltimore, MD, USA
-<sup>5</sup> Howard Hughes Medical Institute, Seattle, WA, USA
+<sup>3</sup> University of North Carolina at Chapel Hill, Chapel Hill, NC, USA <br>
+<sup>4</sup> Johns Hopkins Bloomberg School of Public Health, Baltimore, MD, USA <br>
+<sup>5</sup> Howard Hughes Medical Institute, Seattle, WA, USA <br>
 
 ## Abstract
 
