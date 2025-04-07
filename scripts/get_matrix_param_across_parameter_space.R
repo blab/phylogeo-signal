@@ -127,3 +127,4 @@ t1 <- Sys.time()
 stopCluster(cl)
 
 write_csv(df_params, '../results/df_sens_spec_PPV_F1_across_parameter_space_R_1.3.csv')
+saveRDS(df_params, '../results/df_sens_spec_PPV_F1_across_parameter_space_R_1.3.rds')
