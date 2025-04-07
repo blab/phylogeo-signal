@@ -53,8 +53,7 @@ vec_delta <- 0:n_mut_max
 
 ## Dataframe with the scenarios to be explored
 df_params <- expand.grid(omega = vec_omega, delta = vec_delta) %>% 
-  as_tibble() %>% 
-  filter(omega == 0.7 | delta == 0)
+  as_tibble()
 
 ##################################
 ## Compute coefficients associated with the confusion matrix across pathogens
