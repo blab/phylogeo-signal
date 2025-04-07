@@ -484,7 +484,6 @@ get_proba_stays_within_group <- function(alpha_gen_time, beta_gen_time, lambda){
 ## Function to get the distribution of the number of generation separating two individuals
 ## from the phylosamp package (as a function of the reproduction number R)
 get_distribution_generations_func_R <- function(curr_R){
-  load('../input/phylosamp/genDistSim.rda')
   
   gen_dist <- genDistSim %>% filter(R == curr_R)
   n_gens <- gen_dist[2] %>% as.numeric()
