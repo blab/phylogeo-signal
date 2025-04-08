@@ -1,0 +1,7 @@
+name_group,binning_width,proba_stays_within_group,proba_stays_within_group_across_indiv
+Age groups (1-year width),1,0.11947110198435981,0.05767967638309359
+Age groups (2-year width),2,0.1961832106996323,0.09707640730820649
+Age groups (5-year width),5,0.35399825485456177,0.19418476211680544
+Age groups (10-year width),10,0.47801133504800775,0.2960113229656774
+Age groups (15-year width),15,0.569004975170436,0.3803882040405014
+Age groups (20-year width),20,0.6334577200948811,0.44092472722401205
