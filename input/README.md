@@ -29,5 +29,6 @@ To estimate the probability for a movement to occur within the same county and w
 If re-using these estimates, please refer to [Pullano et al.](https://doi.org/10.2196/64914) and associated [repository](https://github.com/GiuliaPullano/US-Connectivity-Metapop). 
 
 ### 2. Finer-grainer mobility flows between WA geographies
+We provide value of the proportion of movement occurring within the samne geography estimated from mobile phone mobility data in WA at the census block group, census tract, PUMA and county level. 
 
 ## Demographic data
