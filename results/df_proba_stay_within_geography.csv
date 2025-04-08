@@ -1,0 +1,7 @@
+name_group,proba_stays_within_group,name_for_plot
+Census block group,0.04675995971596545,"Census block group (~1,400 inhab.)"
+PUMA,0.5246248184161887,"PUMA (~125,000 inhab.)"
+Census tract,0.10316262544180237,"Census tract (~4,000 inhab.)"
+County (WA),0.8119398161437785,County
+County (US),0.7575630246253904,County
+State,0.9030481984531588,State
