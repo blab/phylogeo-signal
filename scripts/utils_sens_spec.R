@@ -249,6 +249,20 @@ get_proba_m_mutations <- function(nb_mutations_away_obs, mu,
   return(sum(exp(vec_log_for_sum)))
 }
 
+## Function to get the unconditional probability that M <= m
+get_proba_less_m_mutations <- function(nb_mutations_away_obs, mu,
+                                       alpha_gen_time, beta_gen_time,
+                                       empirical_dist_g_gen, g_gen_max){
+  
+ vec_mutations <- 0:nb_mutations_away_obs
+ vec_proba_mutations <- sapply(vec_mutations, FUN = function(curr_mut){
+   get_proba_m_mutations(curr_mut, mu,
+                         alpha_gen_time, beta_gen_time,
+                         empirical_dist_g_gen, g_gen_max)
+ })
+ return(sum(vec_proba_mutations))
+}
+
 ## Function to get the unconditional probability that J = j
 get_proba_j_jumps <- function(nb_jumps_away, lambda,
                               alpha_gen_time, beta_gen_time,
