@@ -123,6 +123,104 @@ df_params$specificity <- foreach(i_param = 1:nrow(df_params), .combine = 'c') %d
                         empirical_dist_g_gen, g_gen_max)
 }
 
+
+## P[J <= 1 jumps]
+df_params$proba_less_1_jump <- foreach(i_param = 1:nrow(df_params), .combine = 'c') %dopar% {
+  curr_mu <- df_params$mu[i_param]
+  curr_lambda <- df_params$lambda[i_param]
+  curr_delta <- df_params$delta[i_param]
+  
+  empirical_dist_g_gen <- empirical_dist_g_gen_R_1.3
+  g_gen_max <- g_gen_max_R_1.3
+  
+  get_proba_j_jumps(0, curr_lambda, alpha_GT, beta_GT, empirical_dist_g_gen, g_gen_max) + 
+    get_proba_j_jumps(1, curr_lambda, alpha_GT, beta_GT, empirical_dist_g_gen, g_gen_max)
+}
+
+## P[M <= Delta mutations]
+df_params$proba_less_delta_mutations <- foreach(i_param = 1:nrow(df_params), .combine = 'c') %dopar% {
+  curr_mu <- df_params$mu[i_param]
+  curr_lambda <- df_params$lambda[i_param]
+  curr_delta <- df_params$delta[i_param]
+  
+  empirical_dist_g_gen <- empirical_dist_g_gen_R_1.3
+  g_gen_max <- g_gen_max_R_1.3
+  
+  vec_mut <- 0:curr_delta
+  sum(sapply(vec_mut, FUN = function(curr_mut){
+    get_proba_m_mutations(curr_mut, curr_mu, alpha_GT, beta_GT, empirical_dist_g_gen, g_gen_max)
+  }))
+}
+
+## P[J  = 0 jump]
+df_params$proba_0_jump <- foreach(i_param = 1:nrow(df_params), .combine = 'c') %dopar% {
+  curr_mu <- df_params$mu[i_param]
+  curr_lambda <- df_params$lambda[i_param]
+  curr_delta <- df_params$delta[i_param]
+  
+  empirical_dist_g_gen <- empirical_dist_g_gen_R_1.3
+  g_gen_max <- g_gen_max_R_1.3
+  
+  get_proba_j_jumps(0, curr_lambda, alpha_GT, beta_GT, empirical_dist_g_gen, g_gen_max)
+}
+
+## P[J  = 1 jump]
+df_params$proba_1_jump <- foreach(i_param = 1:nrow(df_params), .combine = 'c') %dopar% {
+  curr_mu <- df_params$mu[i_param]
+  curr_lambda <- df_params$lambda[i_param]
+  curr_delta <- df_params$delta[i_param]
+  
+  empirical_dist_g_gen <- empirical_dist_g_gen_R_1.3
+  g_gen_max <- g_gen_max_R_1.3
+  
+  get_proba_j_jumps(1, curr_lambda, alpha_GT, beta_GT, empirical_dist_g_gen, g_gen_max)
+}
+
+## P[J = 0 | M <= Delta]
+df_params$proba_0_jump_conditional_m_lower_delta <- foreach(i_param = 1:nrow(df_params), .combine = 'c') %dopar% {
+  curr_mu <- df_params$mu[i_param]
+  curr_lambda <- df_params$lambda[i_param]
+  curr_delta <- df_params$delta[i_param]
+  
+  empirical_dist_g_gen <- empirical_dist_g_gen_R_1.3
+  g_gen_max <- g_gen_max_R_1.3
+  
+  vec_delta <- 0:curr_delta
+  vec_proba_m_mut <- sapply(vec_delta, FUN = function(curr_mut){
+    get_proba_m_mutations(curr_mut, curr_mu, alpha_GT, beta_GT, empirical_dist_g_gen, g_gen_max)
+  })
+  vec_proba_0_jump_conditional_m_mut <- sapply(vec_delta, FUN = function(curr_mut){
+    get_proba_j_jumps_conditional_m_mutations(curr_mut, 0, curr_mu, curr_lambda, alpha_GT, beta_GT, empirical_dist_g_gen, g_gen_max)
+  })
+  
+  return(
+    sum(vec_proba_m_mut * vec_proba_0_jump_conditional_m_mut) / sum(vec_proba_m_mut)
+  )
+}
+
+## P[J = 1 | M <= Delta]
+df_params$proba_1_jump_conditional_m_lower_delta <- foreach(i_param = 1:nrow(df_params), .combine = 'c') %dopar% {
+  curr_mu <- df_params$mu[i_param]
+  curr_lambda <- df_params$lambda[i_param]
+  curr_delta <- df_params$delta[i_param]
+  
+  empirical_dist_g_gen <- empirical_dist_g_gen_R_1.3
+  g_gen_max <- g_gen_max_R_1.3
+  
+  vec_delta <- 0:curr_delta
+  vec_proba_m_mut <- sapply(vec_delta, FUN = function(curr_mut){
+    get_proba_m_mutations(curr_mut, curr_mu, alpha_GT, beta_GT, empirical_dist_g_gen, g_gen_max)
+  })
+  vec_proba_1_jump_conditional_m_mut <- sapply(vec_delta, FUN = function(curr_mut){
+    get_proba_j_jumps_conditional_m_mutations(curr_mut, 1, curr_mu, curr_lambda, alpha_GT, beta_GT, empirical_dist_g_gen, g_gen_max)
+  })
+  
+  return(
+    sum(vec_proba_m_mut * vec_proba_1_jump_conditional_m_mut) / sum(vec_proba_m_mut)
+  )
+}
+
+
 t1 <- Sys.time()
 stopCluster(cl)
 
