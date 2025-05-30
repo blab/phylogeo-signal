@@ -1,8 +1,59 @@
 library(tidyverse)
+library(RColorBrewer)
 library(ggpubr)
+source('utils_sens_spec.R')
 
-## Load confusion matrix parameters across pathogens
-df_sens_spec_FDR_across_pathogens_R_1.3 <- read_csv('../results/df_sens_spec_FDR_F1_across_pathogens_R_1.3.csv')
+## Load confusion matrix parameters across parameter space
+df_ppv <- read_csv('../results/df_sens_spec_PPV_F1_across_parameter_space_R_1.3.csv')
+
+df_ppv %>% filter(delta == 0, omega %in% c(0.2, 0.8), proba_trans_before_mut %in% c(0.2, 0.8))
+
+## Load age assortativity estimates
+df_assortativity_age <- read_csv('../results/df_proba_stays_within_age_group_WA.csv') %>% 
+  mutate(name_for_plot = paste0(binning_width, 'y bin'))
+
+## Load spatial assortativity estimates
+df_assortativity_space <- read_csv('../results/df_proba_stay_within_geography.csv') %>% 
+  filter(name_group != 'County (WA)')
+
+## Load pathogen evolutionary characteristics
+df_pathogen_char <- read_csv('../input/characteristics_pathogens.csv') %>% 
+  mutate(subs_rate_per_year = subs_rate_in_mut_per_site_per_year * genome_length,
+         subs_rate_per_day = subs_rate_per_year / 365.25,
+         mean_delay_between_mut = 1./subs_rate_per_day)
+
+## Estimate parameters of the Gamma distribution for the generation time
+df_pathogen_char <- bind_cols(df_pathogen_char, 
+                              Reduce('bind_rows', lapply(1:nrow(df_pathogen_char), FUN = function(i_row){
+                                vec_gamma_param <- get_gamma_param_from_mean_sd(df_pathogen_char$mean_GT[i_row], df_pathogen_char$sd_GT[i_row])
+                                names(vec_gamma_param) <- c('alpha_GT', 'beta_GT')
+                                vec_gamma_param
+                              })))
+
+## Compute probability that transmission occurs before mutation
+df_pathogen_char$proba_trans_before_mut <- sapply(1:nrow(df_pathogen_char), FUN = function(i_path){
+  get_proba_transm_before_mut(alpha_gen_time = df_pathogen_char$alpha_GT[i_path],
+                              beta_gen_time = df_pathogen_char$beta_GT[i_path],
+                              mu = df_pathogen_char$subs_rate_per_day[i_path])
+})
+
+## Only select a subset of pathogens to be plotted
+df_pathogen_char_to_plot <- df_pathogen_char[c(1, 2, 3, 5, 6, 7, 9, 10), ] %>% 
+  mutate(pathogen = ifelse(pathogen == 'Influenza A (H3N2) - HA only', 'Influenza A (H3N2) - HA', pathogen))
+
+## Display optimal Delta value maximising F1 score across the parameter space
+
+### Plot characteristics
+crop_delta_axis <- 15 # Maximim delta value used for plotting
+my_pal <- colorRampPalette(colors = brewer.pal(11, 'PiYG'))(crop_delta_axis + 1) # Color palette for heatmap
+
+col_age_groups <- 'dodgerblue3'
+light_col_age_groups <- colorspace::lighten(col_age_groups, 0.8)
+col_regions <- 'darkorange3'
+light_col_regions <- colorspace::lighten(col_regions, 0.8)
+
+col_pathogens <- 'gray10'
+light_col_pathogens <- colorspace::lighten(col_pathogens, 0.8)
 
 ## Define theme for figures
 my_theme_classic <- function(){
@@ -15,84 +66,87 @@ my_theme_classic <- function(){
            strip.text = element_text(size = 12, colour = 'white'))) %>% 
     return()
 }
+my_theme_bw <- function(){
+  (theme_bw() + 
+     theme(panel.grid = element_blank(),
+           axis.text = element_text(size = 12), 
+           axis.title = element_text(size = 12),
+           legend.text = element_text(size = 12), 
+           legend.title = element_text(size = 12),
+           strip.background = element_rect(fill = 'gray22'), 
+           strip.text = element_text(size = 12, colour = 'white'))) %>% 
+    return()
+}
 
-## Define colors for pathogens
-name_pathogens <- unique(df_sens_spec_FDR_across_pathogens_R_1.3$pathogen)
-vec_pathogens_to_keep <- c('Influenza A (H3N2) - HA only', 'SARS-CoV-2 (Omicron)', 'SARS-CoV')
-vec_names_pathogens_to_keep <- c('Influenza A (H3N2) - HA only\nHigh p', 
-                                 'SARS-CoV-2 (Omicron)\nMedium p',
-                                 'SARS-CoV\nLow p')
-vec_colors_pathogens_to_keep <- c('firebrick3', 'orange2', 'forestgreen')
-vec_colors_all_pathogens <- sapply(name_pathogens, FUN = function(pathogen){
-  ifelse(pathogen %in% vec_pathogens_to_keep, 
-         vec_colors_pathogens_to_keep[which(vec_pathogens_to_keep == pathogen)], 
-         'gray10')
-})
+heatmap_ppv_exactly_0 <- df_ppv %>% filter(delta == 0) %>% 
+  ggplot(aes(x = proba_trans_before_mut, y = omega)) +
+  geom_tile(aes(fill = ppv)) +
+  annotate(geom = 'text', x = 0.5, y = 1.5, label = 'PATHOGENS', color = col_pathogens, 
+           fontface = 'bold') +
+  annotate(geom = 'rect', xmin = 0., xmax = 1.0, ymin = 1.03, ymax = 1.48, 
+           fill = light_col_pathogens) +
+  geom_point(data = df_pathogen_char_to_plot, 
+             aes(x = proba_trans_before_mut, y = 1.01), col = col_pathogens) +
+  geom_text(data = df_pathogen_char_to_plot,
+            aes(x = proba_trans_before_mut, y = 1.04, label = pathogen),
+            angle = 90, hjust = 0., col = col_pathogens) +
+  geom_segment(data = df_pathogen_char_to_plot, 
+               aes(x = proba_trans_before_mut, xend = proba_trans_before_mut, 
+                   y = 1.01, yend = 1.03), col = col_pathogens) +
+  
+  annotate(geom = 'text', x = 1.17, y = 1.02, label = 'AGES', color = col_age_groups, 
+           fontface = 'bold') +
+  annotate(geom = 'rect', xmin = 1.1, xmax = 1.25, ymin = 0, ymax = 1., fill = light_col_age_groups) +
+  geom_point(data = df_assortativity_age, aes(x = 1.01, y = proba_stays_within_group),
+             color = col_age_groups) +
+  geom_text(data = df_assortativity_age,
+            aes(x = 1.17, y = proba_stays_within_group, label = name_for_plot), 
+            col = col_age_groups) +
+  geom_segment(data = df_assortativity_age, 
+               aes(x = 1.01, xend = 1.1, y = proba_stays_within_group, yend = proba_stays_within_group),
+               color = col_age_groups, linetype = 'dashed') +
 
-
-## Subset the results table to only retain 3 focal pathogens
-df_for_f1_score <- df_sens_spec_FDR_across_pathogens_R_1.3 %>% 
-  filter(pathogen %in% vec_pathogens_to_keep)
-## For each pathogen and mixing process (characterized by omega), 
-## only retain the Delta with the highest F1 score
-df_arrow_f1 <- df_for_f1_score %>% group_by(pathogen, omega) %>% 
-  filter(f1_score == max(f1_score))
-
-## Figure 4A - F1 score as a function of Delta
-### Define characteristics of arrows that we plot
-length_arrow_f1 <- 0.05
-y_position_arrow_f1 <- 0.5
-
-plt_f1_score_func_delta <- df_for_f1_score %>% filter(omega == 0.7) %>% 
-  ggplot(aes(x = as.factor(delta), colour = pathogen, group = pathogen)) +
-  geom_point(aes(y = f1_score)) +
-  geom_line(aes(y = f1_score)) +
-  geom_segment(data = df_arrow_f1 %>% filter(omega == 0.7), 
-               aes(x = as.factor(delta), xend = as.factor(delta), 
-                   y = y_position_arrow_f1 + length_arrow_f1, yend = y_position_arrow_f1),
-               arrow = arrow(length = unit(0.03, "npc"))) +
-  scale_x_discrete(breaks = 0:15, 
-                   name = expression(atop('Genetic distance threshold', 'for linkage '*Delta))) +
-  scale_y_continuous(limits = c(0., NA), breaks = seq(0., 1., 0.1),
-                     name = expression(paste(F[1], ' score')),
-                     expand = expansion(mult = c(0., 0.01))) +
-  scale_colour_manual(name = '', 
-                      breaks = vec_pathogens_to_keep, 
-                      labels = vec_names_pathogens_to_keep, 
-                      values = vec_colors_pathogens_to_keep) +
+  annotate(geom = 'text', x = 1.505, y = 1.02, label = 'REGIONS', color = col_regions, 
+           fontface = 'bold') +
+  annotate(geom = 'rect', xmin = 1.26, xmax = 1.75, ymin = 0, ymax = 1., fill = light_col_regions) +
+  geom_point(data = df_assortativity_space, aes(x = 1.01, y = proba_stays_within_group),
+             color = col_regions) +
+  geom_text(data = df_assortativity_space,
+            aes(x = 1.505, y = proba_stays_within_group, label = name_for_plot), 
+            col = col_regions) +
+  geom_segment(data = df_assortativity_space, 
+               aes(x = 1.01, xend = 1.28, y = proba_stays_within_group, yend = proba_stays_within_group),
+               color = col_regions, linetype = 'dashed') +
+  scale_x_continuous(name = expression(paste('Probability that transmission occurs before mutation '*p)),
+                     limits = c(0., NA),
+                     breaks = seq(0., 1., 0.1),
+                     expand = expansion(mult = c(0., 0.0))) +
+  scale_y_continuous(name = expression(paste('Probability that transmission occurs before migration ', omega)),
+                     limits = c(0., NA),
+                     breaks = seq(0., 1., 0.1),
+                     expand = expansion(mult = c(0., 0.0)),) +
+  scale_fill_stepsn(
+    colours = colorRampPalette(colors = brewer.pal(9, 'Reds'))(11), 
+    breaks = seq(0., 1., 0.1),
+    limits = c(0., 1.),
+    name = 'PPV') +
+  coord_fixed() +
   my_theme_classic() +
-  theme(legend.position = 'bottom')
+  theme(legend.key.width = unit(2.5, 'cm'),
+        legend.position = 'bottom',
+        axis.title = element_text(size = 12),
+        axis.text = element_text(size = 12)
+        )
 
-## Figure 4B - Delta value maximizing F1 score across omega values
-plt_optimal_threshold_func_omega <- df_sens_spec_FDR_across_pathogens_R_1.3 %>% 
-  group_by(omega, pathogen) %>% 
-  filter(f1_score == max(f1_score)) %>% 
-  filter(pathogen %in% vec_pathogens_to_keep) %>% 
-  ggplot(aes(x = omega, y = delta, colour = pathogen)) +
-  scale_x_continuous(name = expression(atop('Probability that transmission', 'occurs within the same group '*omega))) +
-  scale_y_continuous(breaks = 0:15, 
-                     name = expression(atop('Genetic distance threshold '*Delta, ' maximizing '*F[1]*' score')),
-                     limits = c(0, 14)) +
-  scale_colour_manual(name = '', 
-                      breaks = vec_pathogens_to_keep, 
-                      labels = vec_names_pathogens_to_keep, 
-                      values = vec_colors_pathogens_to_keep) +
-  geom_line() +
-  my_theme_classic() +
-  theme(legend.position = 'bottom')
-
-
-panel_f1_score <- 
-  ggarrange(plt_f1_score_func_delta, plt_optimal_threshold_func_omega, 
-          nrow = 1, ncol = 2, widths = c(1.1, 1.0),
-          common.legend = T, legend = 'bottom', labels = 'AUTO')
-
-#pdf('../figures/figure_4_f1_score.pdf', height = 4., width = 8)
-plot(panel_f1_score)
-#dev.off()
-
-# png('../figures/figure_4_f1_score.png', height = 4., width = 8,
-#     res = 350, units = 'in')
-# plot(panel_f1_score)
+# pdf('../figures/ppv_0.pdf', height = 10, width = 10)
+# plot(heatmap_ppv_exactly_0)
 # dev.off()
+    
 
+
+df_ppv %>% filter(abs(omega - 0.5) < 1e-5) %>% 
+  filter(proba_trans_before_mut %in% seq(0.1, 0.9, 0.1)) %>% 
+  ggplot(aes(x = delta, y = 1000 * proba_less_delta_mutations)) +
+  geom_line(aes(group = proba_trans_before_mut, 
+                colour = proba_trans_before_mut)) +
+  geom_point()
