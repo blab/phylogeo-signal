@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="160mm"
+   width="163mm"
    height="75mm"
-   viewBox="0 0 160 75"
+   viewBox="0 0 163 75"
    version="1.1"
    id="svg5"
    sodipodi:docname="illustration-confusion-matrix.svg"
@@ -27,15 +27,15 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.68099269"
-     inkscape:cx="380.32713"
-     inkscape:cy="265.05424"
-     inkscape:window-width="1440"
-     inkscape:window-height="789"
+     inkscape:zoom="1.1272387"
+     inkscape:cx="222.66802"
+     inkscape:cy="86.938112"
+     inkscape:window-width="1920"
+     inkscape:window-height="1080"
      inkscape:window-x="0"
-     inkscape:window-y="25"
+     inkscape:window-y="0"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="g23946" />
   <defs
      id="defs2">
     <rect
@@ -1925,7 +1925,7 @@
          inkscape:rounded="0"
          inkscape:randomized="0"
          d="m 159.8441,27.462934 -5.92785,9.692481 -5.4354,-9.976971 -5.43001,-9.97991 11.35801,0.281287 11.35786,0.287428 z"
-         transform="matrix(0.03047058,0.04974953,-0.04974953,0.03047058,16.33345,25.051825)"
+         transform="matrix(0.03047058,0.04974953,-0.04974953,0.03047058,16.33345,29.351912)"
          inkscape:transform-center-x="-0.23872307"
          inkscape:transform-center-y="-0.49933726" />
       <path
@@ -1943,20 +1943,42 @@
          inkscape:rounded="0"
          inkscape:randomized="0"
          d="m 159.8441,27.462934 -5.92785,9.692481 -5.4354,-9.976971 -5.43001,-9.97991 11.35801,0.281287 11.35786,0.287428 z"
-         transform="matrix(0.03047058,0.04974953,-0.04974953,0.03047058,18.453299,25.051825)"
+         transform="matrix(0.03047058,0.04974953,-0.04974953,0.03047058,18.453299,29.351912)"
          inkscape:transform-center-x="-0.23872307"
          inkscape:transform-center-y="-0.49933726" />
       <text
          xml:space="preserve"
          style="font-weight:bold;font-size:2px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold';text-align:start;direction:rtl;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
          x="4.3453984"
-         y="33.79211"
+         y="38.092216"
          id="text10337-0-2"><tspan
            sodipodi:role="line"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;font-family:Helvetica;-inkscape-font-specification:Helvetica;text-align:end;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124"
            x="4.3453984"
-           y="33.79211"
+           y="38.092216"
            id="tspan10604-2">Linked pair</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:2px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold';text-align:start;direction:rtl;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
+         x="4.2823229"
+         y="31.191553"
+         id="text10337-0-2-1"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;font-family:Helvetica;-inkscape-font-specification:Helvetica;text-align:end;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124"
+           x="4.2823229"
+           y="31.191553"
+           id="tspan10604-2-7">Sequenced infection</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:2px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold';text-align:start;direction:rtl;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
+         x="4.2192473"
+         y="33.576466"
+         id="text10337-0-2-1-1"><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;font-family:Helvetica;-inkscape-font-specification:Helvetica;text-align:end;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124"
+           x="4.2192473"
+           y="33.576466"
+           id="tspan10604-2-7-3">Unsequenced infection</tspan></text>
       <path
          sodipodi:type="star"
          style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.9198;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
@@ -1972,29 +1994,35 @@
          inkscape:rounded="0"
          inkscape:randomized="0"
          d="m 159.8441,27.462934 -5.92785,9.692481 -5.4354,-9.976971 -5.43001,-9.97991 11.35801,0.281287 11.35786,0.287428 z"
-         transform="matrix(0.03047058,0.04974953,-0.04974953,0.03047058,18.588078,27.912015)"
+         transform="matrix(0.03047058,0.04974953,-0.04974953,0.03047058,18.588078,32.212102)"
          inkscape:transform-center-x="-0.23872307"
          inkscape:transform-center-y="-0.49933726" />
       <text
          xml:space="preserve"
          style="font-weight:bold;font-size:2px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold';text-align:start;direction:rtl;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
          x="4.3453984"
-         y="36.652302"
+         y="40.952408"
          id="text10337-0-2-7"><tspan
            sodipodi:role="line"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;font-family:Helvetica;-inkscape-font-specification:Helvetica;text-align:end;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124"
            x="4.3453984"
-           y="36.652302"
+           y="40.952408"
            id="tspan10604-2-6">Non linked pair</tspan></text>
       <circle
+         style="fill:#ffffff;fill-opacity:1;stroke:#3b3b3b;stroke-width:0.124116;stroke-linejoin:bevel;stroke-opacity:1"
+         id="path2640-9-0-5-8-87-2-6-0-1-9"
+         cx="26.661314"
+         cy="30.778904"
+         r="0.6050747" />
+      <circle
          style="fill:#3b3b3b;fill-opacity:1;stroke:#3b3b3b;stroke-width:0.124116;stroke-linejoin:bevel;stroke-opacity:1"
-         id="path2640-9-0-5-8-87-2-6-0-1"
-         cx="17.354097"
-         cy="26.446499"
+         id="path2640-9-0-5-8-87-2-6-0-1-9-1"
+         cx="26.661314"
+         cy="33.195065"
          r="0.6050747" />
       <path
          style="fill:#3b3b3b;fill-opacity:1;stroke:#3b3b3b;stroke-width:0.340143;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart-2-6-6-0-7)"
-         d="m 22.272062,29.360203 2.234675,0.01077"
+         d="m 22.272062,26.232867 2.234675,0.01077"
          id="path7062-7-4-5-9-3"
          inkscape:transform-center-x="0.090823972"
          inkscape:transform-center-y="2.3115817" />
@@ -2012,24 +2040,13 @@
       <text
          xml:space="preserve"
          style="font-weight:bold;font-size:2px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold';text-align:start;direction:rtl;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
-         x="4.1936235"
-         y="27.017206"
-         id="text10337-0"><tspan
-           sodipodi:role="line"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;font-family:Helvetica;-inkscape-font-specification:Helvetica;text-align:end;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124"
-           x="4.1936235"
-           y="27.017206"
-           id="tspan10604">Infected host</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-weight:bold;font-size:2px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold';text-align:start;direction:rtl;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
          x="4.1423979"
-         y="29.834665"
+         y="26.707331"
          id="text10337-0-6"><tspan
            sodipodi:role="line"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;font-family:Helvetica;-inkscape-font-specification:Helvetica;text-align:end;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124"
            x="4.1423979"
-           y="29.834665"
+           y="26.707331"
            id="tspan10604-5">Transmission event</tspan></text>
       <rect
          style="fill:#f2b6bc;stroke:none;stroke-width:0.189575;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
@@ -2078,7 +2095,7 @@
          inkscape:rounded="0"
          inkscape:randomized="0"
          d="m 10.348522,37.261743 -0.9490644,-0.45556 -0.8168948,-0.3921 0.4555606,-0.949065 0.3920999,-0.816895 0.9490647,0.455561 0.816895,0.3921 -0.455561,0.949064 z"
-         transform="matrix(0.51033043,0.18097608,-0.18097608,0.51033043,21.593293,16.084233)" />
+         transform="matrix(0.51033043,0.18097608,-0.18097608,0.51033043,21.593293,20.38432)" />
     </g>
     <g
        id="g21766"
@@ -2380,7 +2397,7 @@
          y="51.151455"
          transform="translate(-3.0150596,-6.3500003)" />
       <rect
-         style="fill:#ffe9a6;stroke:none;stroke-width:0.189575;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
+         style="fill:#ffe9a6;fill-opacity:1;stroke:none;stroke-width:0.189575;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
          id="rect10495-5-1-7-5-2"
          width="1.74313"
          height="1.74313"
