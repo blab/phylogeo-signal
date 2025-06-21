@@ -1,0 +1,127 @@
+MUTATION_SCENARIOS=["Low", "High"]
+MIGRATION_SCENARIOS=["Low", "High"]
+
+rule all:
+    input:
+        xml_files = expand("results/xmls/mut_{mut_scenario}_mig_{mig_scenario}.xml", mut_scenario = MUTATION_SCENARIOS, mig_scenario = MIGRATION_SCENARIOS),
+        remaster_trees = expand("results/remaster/mut_{mut_scenario}_mig_{mig_scenario}.trees", mut_scenario = MUTATION_SCENARIOS, mig_scenario = MIGRATION_SCENARIOS),
+        alignment = expand("results/alignment/mut_{mut_scenario}_mig_{mig_scenario}.fasta", mut_scenario = MUTATION_SCENARIOS, mig_scenario = MIGRATION_SCENARIOS),
+        raw_tree = expand("results/augur/tree_raw_mut_{mut_scenario}_mig_{mig_scenario}.nwk", mut_scenario = MUTATION_SCENARIOS, mig_scenario = MIGRATION_SCENARIOS),
+        tree = expand("results/augur/tree_mut_{mut_scenario}_mig_{mig_scenario}.nwk", mut_scenario = MUTATION_SCENARIOS, mig_scenario = MIGRATION_SCENARIOS),
+        metadata = expand("results/metadata/mut_{mut_scenario}_mig_{mig_scenario}.csv", mut_scenario = MUTATION_SCENARIOS, mig_scenario = MIGRATION_SCENARIOS)
+        #auspice_json = expand("results/auspice/auspice_mut_{mut_scenario}_mig_{mig_scenario}.json", mut_scenario = MUTATION_SCENARIOS, mig_scenario = MIGRATION_SCENARIOS)
+
+rule generate_xml_file:
+    """Generating XML for each scenario"""
+    output:
+        xml_file = "results/xmls/mut_{mut_scenario}_mig_{mig_scenario}.xml"
+    params:
+        dir_results = "results/remaster"
+    shell:
+        r"""
+        Rscript ./scripts/get_xml_from_scenario.R {wildcards.mut_scenario} {wildcards.mig_scenario} {output.xml_file} {params.dir_results}
+        """
+
+rule simulate_from_xml:
+    """Simulate from ReMASTER using XML"""
+    input:
+        xml_file = rules.generate_xml_file.output.xml_file,
+    output:
+        remaster_trees = "results/remaster/mut_{mut_scenario}_mig_{mig_scenario}.trees",
+        remaster_nexus = "results/remaster/mut_{mut_scenario}_mig_{mig_scenario}.nexus"
+    shell:
+        """
+        /Applications/BEAST2.7.5/bin/beast -overwrite -seed 1998 {input.xml_file} 
+        """
+
+rule extract_fasta_from_remaster_simul:
+    """Extract alignment file from nexus"""
+    input:
+        remaster_nexus = rules.simulate_from_xml.output.remaster_nexus
+    output:
+        alignment = "results/alignment/mut_{mut_scenario}_mig_{mig_scenario}.fasta"
+    shell:
+        """
+        sed '1d;2d;3d;4d;5d;6d;7d;8d;9d;10d;11d;$d' {input.remaster_nexus} |
+        sed -e "s/\\t\\t/>/g" |
+        sed -e "s/ /\\n/g" |
+        sed -e "s/;//g" > {output.alignment}
+        """
+
+rule extract_metadata_from_remaster_simul:
+    """Extract alignment file from remaster output"""
+    input:
+        remaster_trees = rules.simulate_from_xml.output.remaster_trees
+    output:
+        metadata = "results/metadata/mut_{mut_scenario}_mig_{mig_scenario}.csv"
+    shell:
+        """
+        Rscript ./scripts/get_metadata_from_remaster.R {wildcards.mut_scenario} {wildcards.mig_scenario} {input.remaster_trees} {output.metadata}
+        """
+
+rule tree:
+    input:
+        alignment = rules.extract_fasta_from_remaster_simul.output.alignment
+    output:
+        tree = "results/augur/tree_raw_mut_{mut_scenario}_mig_{mig_scenario}.nwk",
+    shell:
+        """
+        augur tree --alignment {input.alignment} --output {output.tree} --tree-builder-args="-czb"
+        """
+
+rule refine:
+    input:
+        tree = rules.tree.output.tree,
+        alignment = rules.extract_fasta_from_remaster_simul.output.alignment,
+        metadata = rules.extract_metadata_from_remaster_simul.output.metadata
+    output:
+        tree = "results/augur/tree_mut_{mut_scenario}_mig_{mig_scenario}.nwk",
+        node_data = "results/augur/branch_lengths_mut_{mut_scenario}_mig_{mig_scenario}.json"
+    params:
+        divergence_unit = "mutations"
+    shell:
+        """
+        augur refine \
+            --tree {input.tree} \
+            --alignment {input.alignment} \
+            --metadata {input.metadata} \
+            --output-tree {output.tree} \
+            --output-node-data {output.node_data} \
+            --divergence-unit {params.divergence_unit}
+        """
+
+rule ancestral:
+    """Reconstructing ancestral sequences and mutations"""
+    input:
+        tree = rules.refine.output.tree,
+        alignment = rules.extract_fasta_from_remaster_simul.output.alignment,
+    output:
+        node_data = "results/augur/nt_muts_mut_{mut_scenario}_mig_{mig_scenario}.json"
+    params:
+        inference = "joint"
+    shell:
+        """
+        augur ancestral \
+            --tree {input.tree} \
+            --alignment {input.alignment} \
+            --output-node-data {output.node_data} \
+            --inference {params.inference}
+        """
+
+rule export:
+    """Exporting data files for auspice"""
+    input:
+        tree = rules.tree.output.tree,
+        metadata = rules.extract_metadata_from_remaster_simul.output.metadata,
+        branch_lengths = rules.refine.output.node_data,
+        nt_muts = rules.ancestral.output.node_data
+    output:
+        auspice_json = "results/auspice/auspice_mut_{mut_scenario}_mig_{mig_scenario}.json"
+    shell:
+        """
+        augur export v2 \
+            --tree {input.tree} \
+            --metadata {input.metadata} \
+            --node-data {input.branch_lengths} {input.nt_muts} \
+            --output {output.auspice_json}
+        """
