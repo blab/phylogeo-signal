@@ -19,5 +19,7 @@ This repository is organized in sub-folders as follows:
 - ```figures/``` contains the figures (both from the main text and the supplementary information) associated with the manuscript.
 - ```manuscript/``` contains the manuscript.
 - ```scripts/``` contains the code used to analyse the data and reproduce the figures.
+- ```remaster/``` contains the code used to simulate the phylogenies depicted in Figure 1. 
+- ```remaster-sample-size/``` contains the code used to perform the simulation study.
 
 
