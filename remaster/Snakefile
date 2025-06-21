@@ -9,7 +9,6 @@ rule all:
         raw_tree = expand("results/augur/tree_raw_mut_{mut_scenario}_mig_{mig_scenario}.nwk", mut_scenario = MUTATION_SCENARIOS, mig_scenario = MIGRATION_SCENARIOS),
         tree = expand("results/augur/tree_mut_{mut_scenario}_mig_{mig_scenario}.nwk", mut_scenario = MUTATION_SCENARIOS, mig_scenario = MIGRATION_SCENARIOS),
         metadata = expand("results/metadata/mut_{mut_scenario}_mig_{mig_scenario}.csv", mut_scenario = MUTATION_SCENARIOS, mig_scenario = MIGRATION_SCENARIOS)
-        #auspice_json = expand("results/auspice/auspice_mut_{mut_scenario}_mig_{mig_scenario}.json", mut_scenario = MUTATION_SCENARIOS, mig_scenario = MIGRATION_SCENARIOS)
 
 rule generate_xml_file:
     """Generating XML for each scenario"""
