@@ -7,8 +7,8 @@ plot_tree <- function(mut_scenario, mig_scenario){
   title_plot <- paste0('Migration ', mig_scenario, ' / Mutation ', mut_scenario)
   
   # Load tree and metadata
-  divergence_tree <- read.tree(paste0('../results/augur/tree_', scenario_name, '.nwk'))
-  metadata <- read_csv(paste0('../results/metadata/', scenario_name, '.csv'))
+  divergence_tree <- read.tree(paste0('../remaster/results/augur/tree_', scenario_name, '.nwk'))
+  metadata <- read_csv(paste0('../remaster/results/metadata/', scenario_name, '.csv'))
   
   metadata_for_tree <- as_tibble(divergence_tree) %>% left_join(metadata, by = c('label' = 'strain')) %>% 
     rename(tip.label = label)
@@ -38,6 +38,6 @@ panel <-
             nrow = 2) %>% 
   annotate_figure(top = 'Migration rate', left = 'Mutation rate')
 
-pdf('../divergence_trees_trade_off_larger.pdf', height = 6, width = 10)
+pdf('../figures/figure_1.pdf', height = 6, width = 10)
 plot(panel)
 dev.off()
