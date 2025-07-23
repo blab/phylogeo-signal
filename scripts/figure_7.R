@@ -41,7 +41,7 @@ heatmap_max_corr_across_delta_by_pseq <- df_median_cor %>%
                      name = expression(atop("Probability that transmission", 
                                             paste("occurs before migration ", omega)))) +
   viridis::scale_fill_viridis(option = 'magma', limits = c(0., 1.),
-                              name = 'Maximum\nmedian\ncorrelation\nacross\nthresholds',
+                              name = 'Maximum\nmedian\ncorrelation\nacross\nthresholds\n',
                               breaks = seq(0., 1., 0.2)) +
   facet_grid(. ~ p_seq, 
              labeller = as_labeller(c(delta_labels, p_seq_labels),
@@ -80,7 +80,7 @@ heatmap_min_seq_rate_correlation_threshold <- df_median_cor %>%
                      expand = expansion(mult = c(0., 0.)),
                      name = expression(atop("Probability that transmission", 
                                             paste("occurs before migration ", omega)))) +
-  scale_fill_manual(name = 'Minimal sequencing\nrate to reach\ncorrelation\nthreshold',
+  scale_fill_manual(name = 'Minimal sequencing\nrate to reach\ncorrelation\nthreshold\n',
                     values = brewer.pal(5, 'Blues'),
                     breaks = c(0.001, 0.005, 0.01, 0.05, Inf),
                     labels = c(0.001, 0.005, 0.01, 0.05, '0.05 is insufficient')) +
@@ -92,9 +92,6 @@ heatmap_min_seq_rate_correlation_threshold <- df_median_cor %>%
         legend.title = element_text(size = 14),
         legend.text = element_text(size = 14),
         axis.text = element_text(size = 14))
-
-plot(heatmap_min_seq_rate_correlation_threshold)
-
 
 panel_figure_7 <- ggpubr::ggarrange(heatmap_max_corr_across_delta_by_pseq,
                                     heatmap_min_seq_rate_correlation_threshold, nrow = 2,
