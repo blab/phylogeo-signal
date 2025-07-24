@@ -20,7 +20,7 @@ This repository is organized in sub-folders as follows:
 - ```input/``` contains input parameters values and data used to generate analyses. Further information is available on the folder-level [README](https://github.com/blab/phylogeo-signal/blob/main/input/README.md) file. 
 - ```figures/``` contains the figures (both from the main text and the supplementary information) associated with the manuscript.
 - ```manuscript/``` contains the manuscript.
-- ```scripts/``` contains the code used to analyse the data and reproduce the figures.
+- ```scripts/``` contains the code used to analyse the data and reproduce the figures. Further information is available on the folder-level [README](https://github.com/blab/phylogeo-signal/blob/main/scripts/README.md) file. 
 - ```remaster/``` contains the code used to simulate the phylogenies depicted in Figure 1. 
 - ```remaster-sample-size/``` contains the code used to perform the simulation study.
 
