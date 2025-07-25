@@ -6,8 +6,6 @@ THRESHOLDS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
 rule all:
     input:
-        #migration_mat = expand("results/augur/migration_mat_p_{p_trans_before_mut}_omega_{assortativity}_pseq_{pseq}_seed_{seed}.csv", p_trans_before_mut = PROBA_TRANS_BEFORE_MUT, assortativity = ASSORTATIVITY, pseq = P_SEQ, seed = SEEDS),
-        #true_migration_mat = expand("results/migration-mat/migration_mat_p_{p_trans_before_mut}_omega_{assortativity}_pseq_{pseq}_seed_{seed}.csv", p_trans_before_mut = PROBA_TRANS_BEFORE_MUT, assortativity = ASSORTATIVITY, pseq = P_SEQ, seed = SEEDS),
         true_migration_proba = expand("results/migration-mat/migration_proba_p_{p_trans_before_mut}_omega_{assortativity}_pseq_{pseq}_seed_{seed}.csv", p_trans_before_mut = PROBA_TRANS_BEFORE_MUT, assortativity = ASSORTATIVITY, pseq = P_SEQ, seed = SEEDS),
         df_RR_threshold = expand("results/RR/RR_p_{p_trans_before_mut}_omega_{assortativity}_pseq_{pseq}_seed_{seed}_threshold_{threshold}.tsv", p_trans_before_mut = PROBA_TRANS_BEFORE_MUT, assortativity = ASSORTATIVITY, pseq = P_SEQ, seed = SEEDS, threshold = THRESHOLDS)
     
@@ -70,70 +68,6 @@ rule extract_metadata_from_remaster_simul:
         Rscript ./scripts/get_metadata_from_remaster.R {input.remaster_trees} {output.metadata}
         """
 
-rule tree:
-    input:
-        alignment = rules.extract_fasta_from_remaster_simul.output.alignment
-    output:
-        tree = temp("results/augur/tree_raw_p_{p_trans_before_mut}_omega_{assortativity}_pseq_{pseq}_seed_{seed}.nwk"),
-    shell:
-        """
-        augur tree --alignment {input.alignment} --output {output.tree}
-        """
-
-rule refine:
-    input:
-        tree = rules.tree.output.tree,
-        alignment = rules.extract_fasta_from_remaster_simul.output.alignment,
-        metadata = rules.extract_metadata_from_remaster_simul.output.metadata
-    output:
-        tree = temp("results/augur/tree_p_{p_trans_before_mut}_omega_{assortativity}_pseq_{pseq}_seed_{seed}.nwk"),
-        node_data = temp("results/augur/branch_lengths_p_{p_trans_before_mut}_omega_{assortativity}_pseq_{pseq}_seed_{seed}.json")
-    shell:
-        """
-        augur refine \
-            --tree {input.tree} \
-            --alignment {input.alignment} \
-            --metadata {input.metadata} \
-            --output-tree {output.tree} \
-            --output-node-data {output.node_data} 
-        """
-
-rule traits:
-    """Infer ancestral traits (DTA)"""
-    input:
-        tree = rules.refine.output.tree,
-        alignment = rules.extract_fasta_from_remaster_simul.output.alignment,
-        metadata = rules.extract_metadata_from_remaster_simul.output.metadata
-    output:
-        node_data = "results/augur/traits_p_{p_trans_before_mut}_omega_{assortativity}_pseq_{pseq}_seed_{seed}.json"
-    shell:
-        """
-        augur traits \
-            --tree {input.tree} \
-            --metadata {input.metadata} \
-            --columns "subgroup" \
-            --confidence \
-            --output-node-data {output.node_data} 
-        """
-
-rule migration_mat:
-    """Save inferred migration matrix"""
-    input:
-        node_data = rules.traits.output.node_data
-    output:
-        migration_mat = "results/augur/migration_mat_p_{p_trans_before_mut}_omega_{assortativity}_pseq_{pseq}_seed_{seed}.csv"
-    params:
-        remaster_trees = "results/remaster/p_{p_trans_before_mut}_omega_{assortativity}_pseq_{pseq}_seed_{seed}.trees",
-        remaster_nexus = "results/remaster/p_{p_trans_before_mut}_omega_{assortativity}_pseq_{pseq}_seed_{seed}.nexus",
-        node_data = "results/augur/traits_p_{p_trans_before_mut}_omega_{assortativity}_pseq_{pseq}_seed_{seed}.json"
-    shell:
-        r"""
-        Rscript ./scripts/get_migration_matrix_from_traits_json.R {input.node_data} {output.migration_mat}
-        rm {params.remaster_trees}
-        rm {params.remaster_nexus}, 
-        rm {params.node_data}
-        """
-
 rule true_migration_proba:
     output:
         true_migration_proba = "results/migration-mat/migration_proba_p_{p_trans_before_mut}_omega_{assortativity}_pseq_{pseq}_seed_{seed}.csv"
@@ -180,24 +114,4 @@ rule add_char_scenario_to_RR:
             NR==1 {{$0 = $0 OFS "p_trans_before_mut" OFS "assortativity" OFS "pseq" OFS "seed" OFS "threshold"}} 
             NR>1 {{$0 = $0 OFS "{wildcards.p_trans_before_mut}" OFS "{wildcards.assortativity}" OFS {wildcards.pseq} OFS {wildcards.seed} OFS {wildcards.threshold}}}
             {{print}}' < {input.df_RR_threshold} > {output.df_RR_threshold}
-        """
-
-rule aggregate_RR_with_scenario_by_threshold:
-    input:
-        df_RR_by_thresholds = lambda wildcards: expand("results/RR_with_scenario/RR_p_{curr_p_trans_before_mut}_omega_{curr_omega}_pseq_{curr_pseq}_seed_{curr_seed}_threshold_{threshold}.tsv", curr_p_trans_before_mut = PROBA_TRANS_BEFORE_MUT, curr_omega = ASSORTATIVITY, curr_pseq = P_SEQ, curr_seed = SEEDS, threshold = wildcards.threshold)
-    output:
-        aggregated_df_RR = "results/RR_with_scenario/df_RR_aggregated_threshold_{threshold}.tsv"
-    shell:
-        """
-        tsv-append -H {input.df_RR_by_thresholds} > {output.aggregated_df_RR}
-        """
-
-rule aggregate_RR_with_scenario:
-    input:
-        aggregated_df_RR_by_threshold = expand("results/RR_with_scenario/df_RR_aggregated_threshold_{curr_threshold}.tsv", curr_threshold = THRESHOLDS)
-    output:
-        aggregated_df_RR = "results/RR_with_scenario/df_RR_aggregated.tsv"
-    shell:
-        """
-        tsv-append -H {input.aggregated_df_RR_by_threshold} > {output.aggregated_df_RR}
         """
