@@ -24,4 +24,9 @@ This repository is organized in sub-folders as follows:
 - ```remaster/``` contains the code used to simulate the phylogenies depicted in Figure 1. 
 - ```remaster-sample-size/``` contains the code used to perform the simulation study used for Figure 6 and 7.
 
+## Install
+The code is written in R and relies on some packages, which can be installed using:
 
+```bash
+Rscript ./scripts/install_requirements.R "scripts/requirements.txt"
+```
