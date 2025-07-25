@@ -18,6 +18,6 @@
 - [figure_5.R](https://github.com/blab/phylogeo-signal/blob/main/scripts/figure_5.R) contains scripts to reproduce Figure 5.
 - [figure_6.R](https://github.com/blab/phylogeo-signal/blob/main/scripts/figure_6.R) contains scripts to reproduce Figure 6.
 - [figure_7.R](https://github.com/blab/phylogeo-signal/blob/main/scripts/figure_7.R) contains scripts to reproduce Figure 7.
-- [plot_proba_stays_within_age_group.R](https://github.com/blab/phylogeo-signal/blob/main/scripts/) contains scripts to reproduce Figure S1-S2.
-- [plot_dist_number_generations.R](https://github.com/blab/phylogeo-signal/blob/main/scripts/) contains scripts to reproduce Figure S3.
-- [figure_sensitivity_R.R](https://github.com/blab/phylogeo-signal/blob/main/scripts/) contains scripts to reproduce Figure S4.
+- [plot_proba_stays_within_age_group.R](https://github.com/blab/phylogeo-signal/blob/main/scripts/plot_proba_stays_within_age_group.R) contains scripts to reproduce Figure S1-S2.
+- [plot_dist_number_generations.R](https://github.com/blab/phylogeo-signal/blob/main/scripts/plot_dist_number_generations.R) contains scripts to reproduce Figure S3.
+- [figure_sensitivity_R.R](https://github.com/blab/phylogeo-signal/blob/main/scripts/figure_sensitivity_R.R) contains scripts to reproduce Figure S4.
