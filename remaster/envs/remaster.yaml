@@ -7,4 +7,4 @@ dependencies:
   - r-argparse
   - r-tidyverse
   - bioconductor-treeio
-  - pairsnp=0.3.1
+  - pairsnp-0.3.1
