@@ -1,8 +1,14 @@
+#PROBA_TRANS_BEFORE_MUT=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+#ASSORTATIVITY=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+#P_SEQ=[0.001, 0.005, 0.01, 0.05]
+#SEEDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50]
+#THRESHOLDS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+
 PROBA_TRANS_BEFORE_MUT=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
-ASSORTATIVITY=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
-P_SEQ=[0.001, 0.005, 0.01, 0.05]
-SEEDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50]
-THRESHOLDS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+ASSORTATIVITY=[0.1]
+P_SEQ=[0.001]
+SEEDS = [1]
+THRESHOLDS = [0, 1, 2]
 
 rule all:
     input:
@@ -87,7 +93,7 @@ rule dist_mat:
         tmp_df_distance = "results/dist_mat/tmp_df_dist_p_{p_trans_before_mut}_omega_{assortativity}_pseq_{pseq}_seed_{seed}.tsv"
     shell:
         """
-        pairsnp -s -d {params.threshold} -t {params.threads} {input.alignment} > {output.df_distance}
+        pairsnp -s -t {params.threads} {input.alignment} > {output.df_distance}
         (echo "strain_1\tstrain_2\tn_mutations" && cat {output.df_distance}) > {params.tmp_df_distance}
         mv {params.tmp_df_distance} {output.df_distance}
         """

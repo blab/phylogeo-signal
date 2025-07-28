@@ -1,0 +1,10 @@
+name: remaster
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base=4.3.3
+  - r-argparse
+  - r-tidyverse
+  - bioconductor-treeio
+  - pairsnp=0.3.1
