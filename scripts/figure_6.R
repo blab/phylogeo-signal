@@ -37,7 +37,7 @@ get_heatmap_median_cor <- function(df_median_cor){
     scale_y_continuous(breaks = seq(0.1, 0.9, 0.1), 
                        labels = c(0.1, '', 0.3, '', 0.5, '', 0.7, '', 0.9),
                        expand = expansion(mult = c(0., 0.)),
-                       expression('Probability that transmission occurs within the same group '*omega)) +
+                       expression('Within-group transmission probability '*omega)) +
     viridis::scale_fill_viridis(option = 'magma', limits = c(0., 1.),
                                 name = 'Median correlation   ',
                                 breaks = seq(0., 1., 0.2)) +
@@ -58,10 +58,10 @@ heatmap_median_cor <- get_heatmap_median_cor(df_median_cor) +
   theme(legend.key.width = unit(0.5, "in"),
         legend.position = 'top')
 
-pdf('~/Documents/GitHub/phylogeo-signal/figures/figure_6.pdf', height = 10.5, width = 10)
-plot(heatmap_median_cor)
-dev.off()
-png('~/Documents/GitHub/phylogeo-signal/figures/figure_6.png', height = 10.5, width = 10,
-    res = 350, units = 'in')
-plot(heatmap_median_cor)
-dev.off()
+# pdf('~/Documents/GitHub/phylogeo-signal/figures/figure_6.pdf', height = 10.5, width = 10)
+# plot(heatmap_median_cor)
+# dev.off()
+# png('~/Documents/GitHub/phylogeo-signal/figures/figure_6.png', height = 10.5, width = 10,
+#     res = 350, units = 'in')
+# plot(heatmap_median_cor)
+# dev.off()
