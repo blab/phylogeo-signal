@@ -7,7 +7,7 @@
    width="254mm"
    height="230mm"
    viewBox="0 0 960 869.29134"
-   sodipodi:docname="ppv_0.svg"
+   sodipodi:docname="figure_4.svg"
    inkscape:version="1.2.2 (b0a84865, 2022-12-01)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -40,15 +40,15 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
-     inkscape:zoom="0.41420692"
-     inkscape:cx="-156.9264"
-     inkscape:cy="742.38258"
-     inkscape:window-width="1920"
-     inkscape:window-height="1027"
+     inkscape:zoom="0.70678976"
+     inkscape:cx="577.25794"
+     inkscape:cy="311.26654"
+     inkscape:window-width="1440"
+     inkscape:window-height="790"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:window-maximized="0"
-     inkscape:current-layer="g169"
+     inkscape:current-layer="g147"
      inkscape:document-units="mm">
     <inkscape:page
        x="0"
@@ -40092,24 +40092,29 @@
        id="g20165" />
     <g
        id="g20167"
-       transform="translate(0,-59.851323)">
-      <text
-         xml:space="preserve"
-         transform="matrix(0,1,1,0,14.22,259.54)"
-         style="font-variant:normal;font-weight:normal;font-size:12px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         id="text20171"><tspan
-           x="0 8.0039997 12 18.672001 25.344 32.015999 38.688 41.352001 44.015999 46.68 50.015999 56.015999 59.352001 62.688 69.360001 76.031998 79.367996 82.704002 86.040001 89.916 96.587997 103.26 109.26 119.256 121.92 127.92 133.92 136.584 143.256 149.92799 153.26401 159.936 165.936 171.936 178.608 182.604 188.604 191.94 198.612 205.284 208.25999 214.93201 218.92799 225.60001 228.936 238.93201 241.59599 248.26801 252.144 258.81601 262.15201 264.81601 271.48801 278.16"
-           y="0"
-           sodipodi:role="line"
-           id="tspan20169">Probability that transmission occurs before migration </tspan></text>
-      <text
-         xml:space="preserve"
-         transform="matrix(0,1,1,0,14.22,541.03)"
-         style="font-variant:normal;font-weight:normal;font-size:12px;font-family:Symbol;-inkscape-font-specification:Symbol;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
-         id="text20175"><tspan
-           x="0"
-           y="0"
-           id="tspan20173">ω</tspan></text>
+       transform="translate(0,-18.947041)">
+      <g
+         id="g10619">
+        <text
+           xml:space="preserve"
+           transform="matrix(0,1,1,0,14.22,259.54)"
+           style="font-variant:normal;font-weight:normal;font-size:12px;font-family:Helvetica;-inkscape-font-specification:Helvetica;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="text20171"><tspan
+             sodipodi:role="line"
+             id="tspan20169"
+             x="0"
+             y="0">Within-group transmission probability</tspan></text>
+        <text
+           xml:space="preserve"
+           transform="matrix(0,1,1,0,0,0)"
+           style="font-variant:normal;font-weight:normal;font-size:12px;font-family:Symbol;-inkscape-font-specification:Symbol;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+           id="text20175"
+           x="460.03003"
+           y="14.22"><tspan
+             x="460.03003"
+             y="14.22"
+             id="tspan20173">ω</tspan></text>
+      </g>
     </g>
     <g
        id="g20177" />
