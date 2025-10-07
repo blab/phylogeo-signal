@@ -38,8 +38,8 @@ heatmap_max_corr_across_delta_by_pseq <- df_median_cor %>%
   scale_y_continuous(breaks = seq(0.1, 0.9, 0.1), 
                      labels = c(0.1, '', 0.3, '', 0.5, '', 0.7, '', 0.9),
                      expand = expansion(mult = c(0., 0.)),
-                     name = expression(atop("Probability that transmission", 
-                                            paste("occurs before migration ", omega)))) +
+                     name = expression(atop("Within-group transmission", 
+                                            paste("probability ", omega)))) +
   viridis::scale_fill_viridis(option = 'magma', limits = c(0., 1.),
                               name = 'Maximum\nmedian\ncorrelation\nacross\nthresholds\n',
                               breaks = seq(0., 1., 0.2)) +
@@ -78,8 +78,8 @@ heatmap_min_seq_rate_correlation_threshold <- df_median_cor %>%
   scale_y_continuous(breaks = seq(0.1, 0.9, 0.1), 
                      labels = c(0.1, '', 0.3, '', 0.5, '', 0.7, '', 0.9),
                      expand = expansion(mult = c(0., 0.)),
-                     name = expression(atop("Probability that transmission", 
-                                            paste("occurs before migration ", omega)))) +
+                     name = expression(atop("Within-group transmission", 
+                                            paste("probability ", omega)))) +
   scale_fill_manual(name = 'Minimal sequencing\nrate to reach\ncorrelation\nthreshold\n',
                     values = brewer.pal(5, 'Blues'),
                     breaks = c(0.001, 0.005, 0.01, 0.05, Inf),
