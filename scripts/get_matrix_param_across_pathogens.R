@@ -84,10 +84,14 @@ df_sens_spec_FDR_across_pathogens_R_1.3 <- Reduce('bind_rows', lapply(1:nrow(df_
            ppv = get_ppv_delta(curr_delta, curr_mu, curr_lambda, curr_alpha_GT, curr_beta_GT, 
                                empirical_dist_g_gen_R_1.3, g_gen_max_R_1.3),
            f1_score = get_f1_score_delta(curr_delta, curr_mu, curr_lambda, curr_alpha_GT, curr_beta_GT, 
-                                         empirical_dist_g_gen_R_1.3, g_gen_max_R_1.3))
+                                         empirical_dist_g_gen_R_1.3, g_gen_max_R_1.3),
+           proba_0_1_jumps = 
+             get_proba_j_jumps(0, curr_lambda, curr_alpha_GT, curr_beta_GT, empirical_dist_g_gen_R_1.3, g_gen_max_R_1.3) + 
+             get_proba_j_jumps(1, curr_lambda, curr_alpha_GT, curr_beta_GT, empirical_dist_g_gen_R_1.3, g_gen_max_R_1.3))
   }))
 })) %>% 
   mutate(fdr = 1. - ppv, R = 1.3)
+
 df_sens_spec_FDR_across_pathogens_R_1.5 <- Reduce('bind_rows', lapply(1:nrow(df_pathogen_char), FUN = function(i_pathogen){
   curr_alpha_GT <- df_pathogen_char$alpha_GT[i_pathogen]
   curr_beta_GT <- df_pathogen_char$beta_GT[i_pathogen]
@@ -113,10 +117,14 @@ df_sens_spec_FDR_across_pathogens_R_1.5 <- Reduce('bind_rows', lapply(1:nrow(df_
            ppv = get_ppv_delta(curr_delta, curr_mu, curr_lambda, curr_alpha_GT, curr_beta_GT, 
                                empirical_dist_g_gen_R_1.5, g_gen_max_R_1.5),
            f1_score = get_f1_score_delta(curr_delta, curr_mu, curr_lambda, curr_alpha_GT, curr_beta_GT, 
-                                         empirical_dist_g_gen_R_1.5, g_gen_max_R_1.5))
+                                         empirical_dist_g_gen_R_1.5, g_gen_max_R_1.5),
+           proba_0_1_jumps = 
+             get_proba_j_jumps(0, curr_lambda, curr_alpha_GT, curr_beta_GT, empirical_dist_g_gen_R_1.5, g_gen_max_R_1.5) + 
+             get_proba_j_jumps(1, curr_lambda, curr_alpha_GT, curr_beta_GT, empirical_dist_g_gen_R_1.5, g_gen_max_R_1.5))
   }))
 })) %>% 
   mutate(fdr = 1. - ppv, R = 1.5)
+
 df_sens_spec_FDR_across_pathogens_R_1.7 <- Reduce('bind_rows', lapply(1:nrow(df_pathogen_char), FUN = function(i_pathogen){
   curr_alpha_GT <- df_pathogen_char$alpha_GT[i_pathogen]
   curr_beta_GT <- df_pathogen_char$beta_GT[i_pathogen]
@@ -142,7 +150,10 @@ df_sens_spec_FDR_across_pathogens_R_1.7 <- Reduce('bind_rows', lapply(1:nrow(df_
            ppv = get_ppv_delta(curr_delta, curr_mu, curr_lambda, curr_alpha_GT, curr_beta_GT, 
                                empirical_dist_g_gen_R_1.7, g_gen_max_R_1.7),
            f1_score = get_f1_score_delta(curr_delta, curr_mu, curr_lambda, curr_alpha_GT, curr_beta_GT, 
-                                         empirical_dist_g_gen_R_1.7, g_gen_max_R_1.7))
+                                         empirical_dist_g_gen_R_1.7, g_gen_max_R_1.7),
+           proba_0_1_jumps = 
+             get_proba_j_jumps(0, curr_lambda, curr_alpha_GT, curr_beta_GT, empirical_dist_g_gen_R_1.7, g_gen_max_R_1.7) + 
+             get_proba_j_jumps(1, curr_lambda, curr_alpha_GT, curr_beta_GT, empirical_dist_g_gen_R_1.7, g_gen_max_R_1.7))
   }))
 })) %>% 
   mutate(fdr = 1. - ppv, R = 1.7)
