@@ -136,11 +136,12 @@ accuracy_panel <- ggarrange(plt_accuracy_func_p +
                             labels = 'AUTO')
 
 plot(accuracy_panel)
-png('../figures/supplementary-figures/accuracy_panel.png', height = 9, width = 6,
+
+png('../figures/supplementary-figures/accuracy_panel.png', height = 9, width = 6.5,
     res = 350, units = 'in')
 plot(accuracy_panel)
 dev.off()
-pdf('../figures/supplementary-figures/accuracy_panel.pdf', height = 9, width = 6)
+pdf('../figures/supplementary-figures/accuracy_panel.pdf', height = 9, width = 6.5)
 plot(accuracy_panel)
 dev.off()
 

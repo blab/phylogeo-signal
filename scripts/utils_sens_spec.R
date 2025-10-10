@@ -223,6 +223,8 @@ get_proba_j_jumps_conditional_m_mutations <- function(nb_mutations_away_obs, nb_
   return(sum(exp(vec_log_numerator)) / sum(exp(vec_log_denominator)))
 }
 
+
+
 ## Function to get the unconditional probability that M = m
 get_proba_m_mutations <- function(nb_mutations_away_obs, mu,
                                   alpha_gen_time, beta_gen_time,
@@ -384,6 +386,7 @@ get_chi_prime_delta <- function(delta, mu, lambda, alpha_gen_time, beta_gen_time
   return(exp(log_chi_prime))
 }
 
+
 ## Specificity corresponding to a threshold M <= Delta
 get_specificity_delta <- function(delta, mu, lambda, alpha_gen_time, beta_gen_time, 
                                   empirical_dist_g_gen, g_gen_max){
@@ -424,6 +427,35 @@ get_ppv_delta <- function(delta, mu, lambda, alpha_gen_time, beta_gen_time,
   
   vec_log_ppv <- log_sensitivity_delta + log(proba_0_jump + proba_1_jump) - log(proba_below_delta_mutations)
   return(exp(vec_log_ppv))
+}
+
+get_ppv_delta_conditional_1_jump <- function(delta, mu, lambda, alpha_gen_time, beta_gen_time, 
+                                             empirical_dist_g_gen, g_gen_max){
+  
+  ppv <- get_ppv_delta(delta, mu, lambda, alpha_gen_time, beta_gen_time, 
+                       empirical_dist_g_gen, g_gen_max)
+  
+  proba_0_jump <- get_proba_j_jumps(nb_jumps_away = 0,
+                                    lambda,
+                                    alpha_gen_time, beta_gen_time,
+                                    empirical_dist_g_gen, g_gen_max)
+  
+  vec_proba_m_mutations <- sapply(0:delta, FUN = function(curr_mut){
+    get_proba_m_mutations(nb_mutations_away_obs = curr_mut,
+                          mu,
+                          alpha_gen_time, beta_gen_time,
+                          empirical_dist_g_gen, g_gen_max)
+  })
+  
+  vec_proba_0_jumps_conditional_m_mut <- sapply(0:delta, FUN = function(curr_mut){
+    get_proba_j_jumps_conditional_m_mutations(nb_mutations_away_obs = curr_mut, nb_jumps_away = 0, 
+                                              mu, lambda, alpha_gen_time, beta_gen_time, 
+                                              empirical_dist_g_gen, g_gen_max)
+  })
+  
+  proba_0_jump_conditional_less_delta_mutations <- sum(vec_proba_m_mutations * vec_proba_0_jumps_conditional_m_mut) / sum(vec_proba_m_mutations)
+  
+  return((ppv - proba_0_jump_conditional_less_delta_mutations) / (1. - proba_0_jump_conditional_less_delta_mutations))
 }
 
 ## PPV corresponding to a threshold M <= Delta
