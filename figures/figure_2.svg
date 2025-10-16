@@ -27,15 +27,15 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.077421"
-     inkscape:cx="306.28695"
-     inkscape:cy="212.54458"
+     inkscape:zoom="1.0071971"
+     inkscape:cx="215.44939"
+     inkscape:cy="18.864232"
      inkscape:window-width="1440"
-     inkscape:window-height="790"
+     inkscape:window-height="788"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="g23557" />
   <defs
      id="defs2">
     <rect
@@ -1562,6 +1562,86 @@
            x="70.213562"
            y="16.081324"
            id="tspan1236">transmission history</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:2px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold';text-align:start;direction:rtl;text-anchor:start;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
+         x="55.354465"
+         y="20.576012"
+         id="text10337-0-2-6-3"><tspan
+           sodipodi:role="line"
+           id="tspan1322"
+           x="50.484837"
+           y="20.576012"
+           style="text-align:center;text-anchor:middle"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;font-family:Helvetica;-inkscape-font-specification:Helvetica;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124"
+             x="50.484837"
+             y="20.576012"
+             id="tspan1236-8">M ≤ Δ</tspan></tspan><tspan
+           sodipodi:role="line"
+           x="50.484837"
+           y="23.076012"
+           id="tspan1328"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">J = 1</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:2px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold';text-align:start;direction:rtl;text-anchor:start;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
+         x="100.34138"
+         y="20.576012"
+         id="text10337-0-2-6-3-3"><tspan
+           sodipodi:role="line"
+           id="tspan1322-9"
+           x="95.471748"
+           y="20.576012"
+           style="text-align:center;text-anchor:middle"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;font-family:Helvetica;-inkscape-font-specification:Helvetica;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124"
+             x="95.471748"
+             y="20.576012"
+             id="tspan1236-8-7">M ≤ Δ</tspan></tspan><tspan
+           sodipodi:role="line"
+           x="95.471748"
+           y="23.076012"
+           id="tspan1328-7"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">J = 2</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:2px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold';text-align:start;direction:rtl;text-anchor:start;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
+         x="55.354465"
+         y="48.805298"
+         id="text10337-0-2-6-3-4"><tspan
+           sodipodi:role="line"
+           id="tspan1322-3"
+           x="50.484837"
+           y="48.805298"
+           style="text-align:center;text-anchor:middle"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;font-family:Helvetica;-inkscape-font-specification:Helvetica;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124"
+             x="50.484837"
+             y="48.805298"
+             id="tspan1236-8-0">M &gt; Δ</tspan></tspan><tspan
+           sodipodi:role="line"
+           x="50.484837"
+           y="51.305298"
+           id="tspan1328-4"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">J = 1</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:2px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold';text-align:start;direction:rtl;text-anchor:start;white-space:pre;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
+         x="100.34138"
+         y="48.805298"
+         id="text10337-0-2-6-3-4-3"><tspan
+           sodipodi:role="line"
+           id="tspan1322-3-3"
+           x="95.471748"
+           y="48.805298"
+           style="text-align:center;text-anchor:middle"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;font-family:Helvetica;-inkscape-font-specification:Helvetica;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124"
+             x="95.471748"
+             y="48.805298"
+             id="tspan1236-8-0-8">M &gt; Δ</tspan></tspan><tspan
+           sodipodi:role="line"
+           x="95.471748"
+           y="51.305298"
+           id="tspan1328-4-5"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">J = 2</tspan></text>
       <text
          xml:space="preserve"
          style="font-weight:bold;font-size:2px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Bold';text-align:start;direction:rtl;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.124;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
