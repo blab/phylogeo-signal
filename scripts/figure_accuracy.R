@@ -145,3 +145,24 @@ pdf('../figures/supplementary-figures/accuracy_panel.pdf', height = 9, width = 6
 plot(accuracy_panel)
 dev.off()
 
+
+
+accuracy_panel_horizontal <- ggarrange(plt_accuracy_func_p + 
+                                         theme(legend.position = 'none') +
+                                         ggtitle(label = expression(paste(omega, ' = 0.7'))),
+                                       plt_accuracy_func_delta +
+                                         ggtitle(label = expression(paste(omega, ' = 0.7'))),
+                                       plt_accuracy_func_omega,
+                                       plt_accuracy_func_p_omega_0.99 + theme(legend.position = 'none') +
+                                         ggtitle(label = expression(paste(omega, ' = 0.99'))),
+                                       plt_accuracy_func_delta_omega_0.99 +
+                                         ggtitle(label = expression(paste(omega, ' = 0.99'))),
+                                       
+                                       nrow = 2, ncol = 3, 
+                                       common.legend = T, legend = 'bottom',
+                                       labels = c('A', 'C', 'E', 'B', 'D'))
+
+pdf('../figures/supplementary-figures/accuracy_panel_horizontal.pdf', height = 6., width = 8.)
+plot(accuracy_panel_horizontal)
+dev.off()
+  
