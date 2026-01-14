@@ -1,67 +1,64 @@
 library(tidyverse)
 library(RColorBrewer)
-library(viridis)
+source('utils_sens_spec.R')
 
-## Load aggregated RR
-df_for_comp <- Reduce('bind_rows', lapply(1:50, FUN = function(curr_seed){
-  read_csv(paste0('../remaster-sample-size/results/aggregated_RR/df_comp_RR_seed_', curr_seed, '.csv'))
-}))
+## Load confusion matrix parameters across pathogens
+df_sens_spec_FDR_across_pathogens_R_1.3 <- read_csv('../results/df_sens_spec_FDR_F1_across_pathogens_R_1.3.csv')
 
-## Define labels used for facet plots
-delta_labels <- paste0('Delta == ', 0:15)
-names(delta_labels) <- as.character(0:15)
-p_seq_labels <- paste0('p[seq] == ', c(0.001, 0.005, 0.01, 0.05))
-names(p_seq_labels) <- as.character(c(0.001, 0.005, 0.01, 0.05))
-
-## Compute median correlation across replicates for each scenario
-df_median_cor <- df_for_comp %>% 
-  mutate(adj_RR = (n_pairs + 1) / (n_pairs_1_x + 1) / (n_pairs_x_2 + 1) * (n_pairs_x_x + 1)) %>% 
-  filter(subgroup_1 >= subgroup_2) %>% 
-  group_by(p_seq, assortativity, proba_trans_before_mut, seed, threshold) %>% 
-  summarise(cor = cor(adj_RR, true_migration_rate, method = 'spearman')) %>%
-  mutate(cor = replace_na(cor, 0)) %>% 
-  group_by(p_seq, assortativity, proba_trans_before_mut, threshold) %>% 
-  summarise(median_cor = median(cor)) %>% 
-  mutate(median_cor_crop = ifelse(median_cor < 0., 0., median_cor))
-
-## Function to get heatmaps with the median correlation
-get_heatmap_median_cor <- function(df_median_cor){
-  heatmap_median_cor <- df_median_cor %>% 
-    filter(threshold %in% c(0, 5, 10, 15)) %>% 
-    ggplot(aes(x = proba_trans_before_mut, y = assortativity, fill = median_cor_crop)) +
-    geom_tile() +
-    scale_x_continuous(breaks = seq(0.1, 0.9, 0.1), 
-                       labels = c(0.1, '', 0.3, '', 0.5, '', 0.7, '', 0.9),
-                       expand = expansion(mult = c(0., 0.)),
-                       expression('Probability that transmission occurs before mutation '*p)) +
-    scale_y_continuous(breaks = seq(0.1, 0.9, 0.1), 
-                       labels = c(0.1, '', 0.3, '', 0.5, '', 0.7, '', 0.9),
-                       expand = expansion(mult = c(0., 0.)),
-                       expression('Within-group transmission probability '*omega)) +
-    viridis::scale_fill_viridis(option = 'magma', limits = c(0., 1.),
-                                name = 'Median correlation   ',
-                                breaks = seq(0., 1., 0.2)) +
-    facet_grid(threshold ~ p_seq, 
-               labeller = as_labeller(c(delta_labels, p_seq_labels),
-                                      default = label_parsed)) +
-    coord_fixed() +
-    theme(strip.background = element_rect(fill = 'gray82'),
-          strip.text = element_text(colour = 'gray22', size = 14),
-          axis.title = element_text(size = 14),
-          legend.title = element_text(size = 14),
-          legend.text = element_text(size = 14),
-          axis.text = element_text(size = 14))
-  return(heatmap_median_cor)
+## Define theme for figures
+my_theme_classic <- function(){
+  (theme_classic() +
+     theme(axis.text = element_text(size = 12), 
+           axis.title = element_text(size = 12),
+           legend.text = element_text(size = 12), 
+           legend.title = element_text(size = 12),
+           strip.background = element_rect(fill = 'gray22'), 
+           strip.text = element_text(size = 12, colour = 'white'))) %>% 
+    return()
 }
 
-heatmap_median_cor <- get_heatmap_median_cor(df_median_cor) +
-  theme(legend.key.width = unit(0.5, "in"),
-        legend.position = 'top')
+## Define colors for pathogens
+name_pathogens <- unique(df_sens_spec_FDR_across_pathogens_R_1.3$pathogen)
+vec_pathogens_to_keep <- c('Influenza A (H3N2) - HA only', 'SARS-CoV-2 (Omicron)', 'SARS-CoV')
+vec_names_pathogens_to_keep <- c('Influenza A (H3N2) - HA only\nHigh p', 
+                                 'SARS-CoV-2 (Omicron)\nMedium p',
+                                 'SARS-CoV\nLow p')
+vec_colors_pathogens_to_keep <- c('firebrick3', 'orange2', 'forestgreen')
+vec_colors_all_pathogens <- sapply(name_pathogens, FUN = function(pathogen){
+  ifelse(pathogen %in% vec_pathogens_to_keep, 
+         vec_colors_pathogens_to_keep[which(vec_pathogens_to_keep == pathogen)], 
+         'gray10')
+})
 
-pdf('../figures/figure_6.pdf', height = 10.5, width = 10)
-plot(heatmap_median_cor)
+## Figure depicting 
+list_plots <- lapply(1:length(vec_names_pathogens_to_keep), FUN = function(i_pathogen){
+  tmp_df_pathogen <- df_sens_spec_FDR_across_pathogens_R_1.3 %>% 
+    filter(pathogen == vec_pathogens_to_keep[i_pathogen], omega == 0.7, delta <= 10) 
+  pathogen_factor <- max(tmp_df_pathogen$proba_less_delta_mutations)/max(tmp_df_pathogen$ppv)
+  plt <- tmp_df_pathogen %>% 
+    ggplot(aes(x = delta)) + 
+    scale_x_continuous(breaks = 0:10, 
+                       name = expression(atop('Genetic distance threshold', 'for linkage '*Delta))) +
+    scale_y_continuous(name = 'PPV', limits = c(0., NA), 
+                       expand = expansion(mult = c(0., 0.05)),
+                       sec.axis = sec_axis(~ . * pathogen_factor,
+                                           name = expression("Linkage probability "~ P*"["*M <= Delta*"]"))) +
+    geom_line(aes(y = ppv, group = pathogen)) +
+    geom_line(aes(y = proba_less_delta_mutations/pathogen_factor, group = pathogen), linetype = 'dashed') +
+    my_theme_classic() +
+    theme(strip.background = element_rect(fill = vec_colors_pathogens_to_keep[i_pathogen], colour = vec_colors_pathogens_to_keep[i_pathogen])) +
+    facet_wrap(. ~ pathogen, scales = 'free')
+  plt
+})
+
+panel_trade_off <- ggarrange(plotlist = list_plots, ncol = 3)
+
+pdf('../figures/figure_6.pdf', height = 3, width = 11.5)
+plot(panel_trade_off)
 dev.off()
-png('../figures/figure_6.png', height = 10.5, width = 10,
-    res = 350, units = 'in')
-plot(heatmap_median_cor)
+png('../figures/figure_6.png', height = 3, width = 11.5, res = 350, units = 'in')
+plot(panel_trade_off)
 dev.off()
+
+
+
