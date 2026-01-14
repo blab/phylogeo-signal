@@ -53,12 +53,10 @@ list_plots <- lapply(1:length(vec_names_pathogens_to_keep), FUN = function(i_pat
 
 panel_trade_off <- ggarrange(plotlist = list_plots, ncol = 3)
 
-pdf('../figures/trade_off_ppv_linkage_proba.pdf', height = 3, width = 11.5)
+pdf('../figures/figure_5.pdf', height = 3, width = 11.5)
 plot(panel_trade_off)
 dev.off()
-
-
-png('../figures/trade_off_ppv_linkage_proba.png', height = 3, width = 11.5, res = 350, units = 'in')
+png('../figures/figure_5.png', height = 3, width = 11.5, res = 350, units = 'in')
 plot(panel_trade_off)
 dev.off()
 

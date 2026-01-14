@@ -87,7 +87,9 @@ df_sens_spec_FDR_across_pathogens_R_1.3 <- Reduce('bind_rows', lapply(1:nrow(df_
                                          empirical_dist_g_gen_R_1.3, g_gen_max_R_1.3),
            proba_0_1_jumps = 
              get_proba_j_jumps(0, curr_lambda, curr_alpha_GT, curr_beta_GT, empirical_dist_g_gen_R_1.3, g_gen_max_R_1.3) + 
-             get_proba_j_jumps(1, curr_lambda, curr_alpha_GT, curr_beta_GT, empirical_dist_g_gen_R_1.3, g_gen_max_R_1.3))
+             get_proba_j_jumps(1, curr_lambda, curr_alpha_GT, curr_beta_GT, empirical_dist_g_gen_R_1.3, g_gen_max_R_1.3),
+           
+           proba_less_delta_mutations = get_proba_less_m_mutations(delta, curr_mu, curr_alpha_GT, curr_beta_GT, empirical_dist_g_gen_R_1.3, g_gen_max_R_1.3))
   }))
 })) %>% 
   mutate(fdr = 1. - ppv, R = 1.3)
