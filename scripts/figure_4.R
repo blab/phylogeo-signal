@@ -138,15 +138,6 @@ heatmap_ppv_exactly_0 <- df_ppv %>% filter(delta == 0) %>%
         axis.text = element_text(size = 12)
         )
 
-# pdf('../figures/ppv_0.pdf', height = 10, width = 10)
-# plot(heatmap_ppv_exactly_0)
-# dev.off()
-    
-
-
-df_ppv %>% filter(abs(omega - 0.5) < 1e-5) %>% 
-  filter(proba_trans_before_mut %in% seq(0.1, 0.9, 0.1)) %>% 
-  ggplot(aes(x = delta, y = 1000 * proba_less_delta_mutations)) +
-  geom_line(aes(group = proba_trans_before_mut, 
-                colour = proba_trans_before_mut)) +
-  geom_point()
+pdf('../figures/figure_4_raw.pdf', height = 10, width = 10)
+plot(heatmap_ppv_exactly_0)
+dev.off()
