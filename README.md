@@ -11,7 +11,7 @@ This repository is organized in sub-folders as follows:
 - ```manuscript/``` contains the manuscript.
 - ```scripts/``` contains the code used to analyse the data and reproduce the figures. Further information is available on the folder-level [README](https://github.com/blab/phylogeo-signal/blob/main/scripts/README.md) file. 
 - ```remaster/``` contains the code used to simulate the phylogenies depicted in Figure 1. 
-- ```remaster-sample-size/``` contains the code used to perform the simulation study used for Figure 6 and 7.
+- ```remaster-sample-size/``` contains the code used to perform the simulation study used for Figure 7 and 8.
 
 ## Install
 The code is written in R and relies on some packages, which can be installed using:
