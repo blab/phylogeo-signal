@@ -58,10 +58,10 @@ heatmap_median_cor <- get_heatmap_median_cor(df_median_cor) +
   theme(legend.key.width = unit(0.5, "in"),
         legend.position = 'top')
 
-# pdf('~/Documents/GitHub/phylogeo-signal/figures/figure_6.pdf', height = 10.5, width = 10)
-# plot(heatmap_median_cor)
-# dev.off()
-# png('~/Documents/GitHub/phylogeo-signal/figures/figure_6.png', height = 10.5, width = 10,
-#     res = 350, units = 'in')
-# plot(heatmap_median_cor)
-# dev.off()
+pdf('../figures/figure_6.pdf', height = 10.5, width = 10)
+plot(heatmap_median_cor)
+dev.off()
+png('../figures/figure_6.png', height = 10.5, width = 10,
+    res = 350, units = 'in')
+plot(heatmap_median_cor)
+dev.off()
