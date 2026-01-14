@@ -97,11 +97,11 @@ panel_figure_7 <- ggpubr::ggarrange(heatmap_max_corr_across_delta_by_pseq,
                                     heatmap_min_seq_rate_correlation_threshold, nrow = 2,
                                     labels = 'AUTO')
 
-pdf('~/Documents/GitHub/phylogeo-signal/figures/figure_7.pdf',
+pdf('../figures/figure_7.pdf',
     height = 7, width = 11)
 plot(panel_figure_7)
 dev.off()
-png('~/Documents/GitHub/phylogeo-signal/figures/figure_7.png',
+png('../figures/figure_7.png',
     height = 7, width = 11, res = 350, units = 'in')
 plot(panel_figure_7)
 dev.off()
